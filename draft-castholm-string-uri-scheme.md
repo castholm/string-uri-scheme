@@ -1,9 +1,9 @@
 ---
 title: 'The "string" URI Scheme'
-category: info
+category: exp
 
 docname: draft-castholm-string-uri-scheme-latest
-submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
+submissiontype: independent
 number:
 date:
 consensus: true
@@ -11,9 +11,9 @@ v: 3
 # area: AREA
 # workgroup: WG Working Group
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - string
+ - uri
+ - scheme
 venue:
 #  group: WG
 #  type: Working Group
@@ -24,8 +24,7 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
+    fullname: Carl Åstholm
     email: "carl@astholm.se"
 
 normative:
