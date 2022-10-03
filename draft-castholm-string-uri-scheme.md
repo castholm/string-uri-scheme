@@ -32,11 +32,10 @@ informative:
 --- abstract
 
 This document defines string URIs and the "string" URI scheme. A string URI identifies a string contained within the
-URI itself and can be used as a method of specifying an arbitrary string in a context where a value conforming to the
-generic URI syntax is required.
+URI itself and can be used as a method of specifying an arbitrary string in a context where a URI is required.
 
-In addition, this document also defines algorithms for obtaining the character data contained within a string URI and
-for determining whether two string URIs are equivalent.
+In addition, this document also defines algorithms for obtaining the string contained within a string URI and for
+determining whether two string URIs are equivalent.
 
 --- middle
 
@@ -47,6 +46,20 @@ TODO Introduction
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+# Syntax
+
+Uses the syntax and the "ALPHA" and "DIGIT" rules defined by {{!RFC2234}}.
+
+Uses the "pct-encoded" rule defined by {{!RFC3986}}.
+
+```abnf
+
+string-uri = "string:" string-data *( ALPHA / DIGIT / "-" / "_" / pct-encoded )
+
+```
+
+Additional conformance rules that can not be effectively described in ABNF form are also employed.
 
 # Security Considerations
 
