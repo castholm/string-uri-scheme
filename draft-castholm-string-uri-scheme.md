@@ -6,7 +6,6 @@ docname: draft-castholm-string-uri-scheme-latest
 submissiontype: independent
 number:
 date:
-consensus: true
 v: 3
 # area: AREA
 # workgroup: WG Working Group
