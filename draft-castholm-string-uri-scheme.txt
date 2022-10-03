@@ -13,7 +13,15 @@ Expires: 6 April 2023
 
 Abstract
 
-   TODO Abstract
+   This document defines string URIs and the "string" URI scheme.  A
+   string URI identifies a string contained within the URI itself and
+   can be used as a method of specifying an arbitrary string in a
+   context where a value conforming to the generic URI syntax is
+   required.
+
+   In addition, this document also defines algorithms for obtaining the
+   character data contained within a string URI and for determining
+   whether two string URIs are equivalent.
 
 About This Document
 
@@ -80,11 +88,11 @@ Table of Contents
 
 3.  Security Considerations
 
-   TODO Security
+   TODO Security Considerations
 
 4.  IANA Considerations
 
-   This document has no IANA actions.
+   TODO IANA Considerations
 
 5.  Normative References
 
@@ -99,7 +107,7 @@ Table of Contents
 
 Acknowledgments
 
-   TODO acknowledge.
+   TODO Acknowledgments
 
 Author's Address
 
