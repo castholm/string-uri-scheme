@@ -1,5 +1,5 @@
 ---
-title: 'The "string" URI Scheme'
+title: The "string" URI Scheme
 category: exp
 
 docname: draft-castholm-string-uri-scheme-latest
@@ -10,31 +10,33 @@ v: 3
 # area: AREA
 # workgroup: WG Working Group
 keyword:
- - string
- - uri
- - scheme
+  - string
+  - uri
+  - scheme
 venue:
 #  group: WG
 #  type: Working Group
 #  mail: WG@example.com
 #  arch: https://example.com/WG
-  github: "castholm/string-uri-scheme"
-  latest: "https://castholm.github.io/string-uri-scheme/draft-castholm-string-uri-scheme.html"
+  github: castholm/string-uri-scheme
+  latest: 'https://castholm.github.io/string-uri-scheme/draft-castholm-string-uri-scheme.html'
 
 author:
- -
-    fullname: Carl Åstholm
-    email: "carl@astholm.se"
+  - fullname: Carl Åstholm
+    email: carl@astholm.se
 
 normative:
 
 informative:
 
-
 --- abstract
 
-TODO Abstract
+This document defines string URIs and the "string" URI scheme. A string URI identifies a string contained within the
+URI itself and can be used as a method of specifying an arbitrary string in a context where a value conforming to the
+generic URI syntax is required.
 
+In addition, this document also defines algorithms for obtaining the character data contained within a string URI and
+for determining whether two string URIs are equivalent.
 
 --- middle
 
@@ -42,25 +44,21 @@ TODO Abstract
 
 TODO Introduction
 
-
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-
 # Security Considerations
 
-TODO Security
-
+TODO Security Considerations
 
 # IANA Considerations
 
-This document has no IANA actions.
-
+TODO IANA Considerations
 
 --- back
 
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+TODO Acknowledgments
