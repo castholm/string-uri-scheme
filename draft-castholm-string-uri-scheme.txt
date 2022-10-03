@@ -16,12 +16,11 @@ Abstract
    This document defines string URIs and the "string" URI scheme.  A
    string URI identifies a string contained within the URI itself and
    can be used as a method of specifying an arbitrary string in a
-   context where a value conforming to the generic URI syntax is
-   required.
+   context where a URI is required.
 
    In addition, this document also defines algorithms for obtaining the
-   character data contained within a string URI and for determining
-   whether two string URIs are equivalent.
+   string contained within a string URI and for determining whether two
+   string URIs are equivalent.
 
 About This Document
 
@@ -68,9 +67,10 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+   3.  Syntax
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  Normative References
    Acknowledgments
    Author's Address
 
@@ -86,20 +86,46 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  Syntax
+
+   Uses the syntax and the "ALPHA" and "DIGIT" rules defined by
+   [RFC2234].
+
+   Uses the "pct-encoded" rule defined by [RFC3986].
+
+   ```abnf
+
+   string-uri = "string:" string-data *( ALPHA / DIGIT / "-" / "_" /
+   pct-encoded )
+
+   ```
+
+   Additional conformance rules that can not be effectively described in
+   ABNF form are also employed.
+
+4.  Security Considerations
 
    TODO Security Considerations
 
-4.  IANA Considerations
+5.  IANA Considerations
 
    TODO IANA Considerations
 
-5.  Normative References
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC2234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", RFC 2234, DOI 10.17487/RFC2234,
+              November 1997, <https://www.rfc-editor.org/rfc/rfc2234>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
