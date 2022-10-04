@@ -7,10 +7,10 @@
 <title>The "string" URI Scheme</title>
 <meta content="Carl Åstholm" name="author">
 <meta content='
-       This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+       This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most commonly, but not
 necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
 specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
-for processing and determining equivalence that make it easy for applications to consume them. 
+for processing and determining equivalence that make it simple for applications to consume them. 
     ' name="description">
 <meta content="xml2rfc 3.15.0" name="generator">
 <meta content="string" name="keyword">
@@ -1074,10 +1074,10 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">The "string" URI Scheme</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+<p id="section-abstract-1">This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most commonly, but not
 necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
 specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
-for processing and determining equivalence that make it easy for applications to consume them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+for processing and determining equivalence that make it simple for applications to consume them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1149,6 +1149,11 @@ for processing and determining equivalence that make it easy for applications to
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-registration-of-the-string-" class="internal xref">Registration of the "string" URI Scheme</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
@@ -1196,7 +1201,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-syntax" class="section-name selfRef">Syntax</a>
       </h2>
 <p id="section-3-1">Using ABNF and the "DIGIT" and "ALPHA" rules defined by <span>[<a href="#RFC2234" class="cite xref">RFC2234</a>]</span>, the syntax of string URIs is defined by the
-"string-URI" rule below:<a href="#section-3-1" class="pilcrow">¶</a></p>
+"string-URI" rule defined below:<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="section-3-2">
 <pre class="lang-abnf sourcecode">
 string-URI = %x73.74.72.69.6E.67 ":" data
@@ -1230,7 +1235,6 @@ pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
 pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 
 hex        = %x30-39 / %x41-46
-
 </pre><a href="#section-3-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3-3">The syntax of string URIs can also be described by the following POSIX regular expression (whitespace and newlines
@@ -1264,17 +1268,14 @@ have only been included to improve readability and should be ignored):<a href="#
 <ul class="normal">
 <li class="normal" id="section-3-6.1">The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").<a href="#section-3-6.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.2">The substring immediately following the colon must only contain the digits 0 to 9, the letters A to Z in both
-uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
-<span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).<a href="#section-3-6.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.2">Everything following the colon must only contain the digits 0 to 9, the letters A to Z in both uppercase and
+lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).<a href="#section-3-6.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.3">The substring immediately following the colon may also be empty (meaning "string:" is a valid string URI).<a href="#section-3-6.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.3">Percent-encoded octets must not use lowercase hexadecimal digits.<a href="#section-3-6.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.4">Percent-encoded octets must not use lowercase hexadecimal digits.<a href="#section-3-6.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.4">Percent-encoded octets must decode to valid UTF-8.<a href="#section-3-6.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.5">Percent-encoded octets must decode to valid UTF-8.<a href="#section-3-6.5" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-3-6.6">Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".<a href="#section-3-6.6" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.5">Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".<a href="#section-3-6.5" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
@@ -1292,7 +1293,45 @@ uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-e
       <h2 id="name-iana-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">TODO IANA Considerations<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="registration-of-the-string-uri-scheme">
+<section id="section-5.1">
+        <h3 id="name-registration-of-the-string-">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-registration-of-the-string-" class="section-name selfRef">Registration of the "string" URI Scheme</a>
+        </h3>
+<span class="break"></span><dl class="dlNewline" id="section-5.1-1">
+          <dt id="section-5.1-1.1">Scheme name:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.2">
+            <p id="section-5.1-1.2.1">string<a href="#section-5.1-1.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-1.3">Status:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.4">
+            <p id="section-5.1-1.4.1">Provisional<a href="#section-5.1-1.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-1.5">Applications/protocols that use this scheme name:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.6">
+            <p id="section-5.1-1.6.1">N/A<a href="#section-5.1-1.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-1.7">Contact:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.8">
+            <p id="section-5.1-1.8.1">N/A<a href="#section-5.1-1.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-1.9">Change controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.10">
+            <p id="section-5.1-1.10.1">N/A<a href="#section-5.1-1.10.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-1.11">References:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-1.12">
+            <p id="section-5.1-1.12.1">This document<a href="#section-5.1-1.12.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <section id="section-6">

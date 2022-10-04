@@ -14,11 +14,11 @@ Expires: 7 April 2023
 Abstract
 
    This document defines string URIs and the "string" URI scheme.  A
-   string URI identifies a value (most often, but not necessarily, a
+   string URI identifies a value (most commonly, but not necessarily, a
    string of characters) from an application-dependent set of values and
    can be used as a method of specifying such a value in a context where
    a URI is required.  String URIs have a strict syntax and well-defined
-   rules for processing and determining equivalence that make it easy
+   rules for processing and determining equivalence that make it simple
    for applications to consume them.
 
 About This Document
@@ -69,6 +69,7 @@ Table of Contents
    3.  Syntax
    4.  Security Considerations
    5.  IANA Considerations
+     5.1.  Registration of the "string" URI Scheme
    6.  References
      6.1.  Normative References
      6.2.  Informative References
@@ -90,7 +91,8 @@ Table of Contents
 3.  Syntax
 
    Using ABNF and the "DIGIT" and "ALPHA" rules defined by [RFC2234],
-   the syntax of string URIs is defined by the "string-URI" rule below:
+   the syntax of string URIs is defined by the "string-URI" rule defined
+   below:
 
    string-URI = %x73.74.72.69.6E.67 ":" data
    data       = *( DIGIT / ALPHA / "-" / "_" / pct )
@@ -156,13 +158,10 @@ Table of Contents
    *  The URI must begin with a case-sensitive match for "string" in all
       lowercase immediately followed by a colon (":").
 
-   *  The substring immediately following the colon must only contain
-      the digits 0 to 9, the letters A to Z in both uppercase and
-      lowercase, the hyphen-minus ("-"), the low line ("_") or percent-
-      encoded octets (see Section 2.1 of [RFC3986]).
-
-   *  The substring immediately following the colon may also be empty
-      (meaning "string:" is a valid string URI).
+   *  Everything following the colon must only contain the digits 0 to
+      9, the letters A to Z in both uppercase and lowercase, the hyphen-
+      minus ("-"), the low line ("_") or percent-encoded octets (see
+      Section 2.1 of [RFC3986]).
 
    *  Percent-encoded octets must not use lowercase hexadecimal digits.
 
@@ -177,7 +176,25 @@ Table of Contents
 
 5.  IANA Considerations
 
-   TODO IANA Considerations
+5.1.  Registration of the "string" URI Scheme
+
+   Scheme name:
+      string
+
+   Status:
+      Provisional
+
+   Applications/protocols that use this scheme name:
+      N/A
+
+   Contact:
+      N/A
+
+   Change controller:
+      N/A
+
+   References:
+      This document
 
 6.  References
 
