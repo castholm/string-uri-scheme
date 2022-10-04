@@ -149,7 +149,7 @@ TODO Locating Resources Identified by String URIs
 
 ## Conformance Requirements
 
-A string URI MUST conform to the syntax described in {{#syntax}}.
+A string URI MUST conform to the syntax described in {{syntax}}.
 
 ## Handling Nonconforming String URIs
 
