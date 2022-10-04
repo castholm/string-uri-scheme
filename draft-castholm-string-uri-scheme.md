@@ -31,16 +31,24 @@ informative:
 
 --- abstract
 
-This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most commonly, but not
-necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
-specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
-for processing and determining equivalence that make it simple for applications to consume them.
+This document defines string URIs and the "string" URI scheme. A string URI identifies an application-dependent value
+(most commonly, but not necessarily, a string of characters) and can be used as a method of specifying such a value in
+a context where a URI is required. String URIs have a strict syntax and well-defined rules for processing and
+determining equivalence that make it simple for applications to consume them.
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+A string URI is a URI that identifies an application-dependent value, such as a string of characters. It uses the
+"string" URI scheme, which is designed to meet the following requirements:
+
+- Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.
+- Identifiers are convenient for developers and users of applications to define, create and process.
+- An identifier that identifies a string consisting of only alphanumeric ASCII characters may safely include that
+  string as a component of the identifier itself without requiring any preprocessing.
+- An identifier has exactly one valid representation, making determining whether two identifiers for equality very
+  simple.
 
 # Conventions and Definitions
 
@@ -137,7 +145,8 @@ Status:
 : Provisional
 
 Applications/protocols that use this scheme name:
-: N/A
+: Any application or protocol may use this scheme for any purpose, so long as the use conforms to the rules defined in
+  this document.
 
 Contact:
 : N/A
