@@ -31,11 +31,10 @@ informative:
 
 --- abstract
 
-This document defines string URIs and the "string" URI scheme. A string URI identifies a value, most often (but not
-necessarily) a string of character data, from an application-dependent set of values and can be used as a method of
-specifying such a value in a context where a syntactically correct URI is required. String URIs have a strict syntax
-and well-defined rules for processing and determining equivalence that intend to make it easy for applications to
-consume them.
+This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
+specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
+for processing and determining equivalence that make it easy for applications to consume them.
 
 --- middle
 
@@ -78,7 +77,8 @@ pct-3-1-2  = %x45 ( "0%" %x41-42 hex
 pct-4      = pct-4-1-2 pct-cont pct-cont
 pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
                   / %x31-33 pct-cont
-                  ) "4%8" hex
+                  / "4%8" hex
+                  )
 
 pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 
@@ -90,7 +90,7 @@ The syntax of string URIs can also be described by the following POSIX regular e
 have only been included to improve readability and should be ignored):
 
 ~~~
-^string:(([0-9A-Za-z\-_]|%(
+^string\:(([0-9A-Za-z\-_]|%(
  [01][0-9A-F]
  |2[0-9ABCEF]
  |3[A-F]
@@ -113,16 +113,16 @@ have only been included to improve readability and should be ignored):
 ))*)$
 ~~~
 
-In slightly less technical terms, the syntax of string URIs can be also described as follows (non-normative):
+In slightly less technical terms, the syntax of string URIs can be described as follows (non-normative):
 
-- The URI must begin with a case-sensitive match for "string" in all lowercase followed by a colon (`:`).
+- The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
 - The substring immediately following the colon must only contain the digits 0 to 9, the letters A to Z in both
-  uppercase and lowercase, the hyphen-minus (`-`), the low line (`_`) or percent-encoded octets (see
+  uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
   {{Section 2.1 of ?RFC3986}}).
-- The substring immediately following the colon may be empty (meaning "string:" is a valid string URI).
+- The substring immediately following the colon may also be empty (meaning "string:" is a valid string URI).
 - Percent-encoded octets must not use lowercase hexadecimal digits.
-- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), `-` or `_`.
 - Percent-encoded octets must decode to valid UTF-8.
+- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
 
 # Security Considerations
 
