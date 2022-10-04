@@ -31,11 +31,11 @@ informative:
 
 --- abstract
 
-This document defines string URIs and the "string" URI scheme. A string URI identifies a string contained within the
-URI itself and can be used as a method of specifying an arbitrary string in a context where a URI is required.
-
-In addition, this document also defines algorithms for obtaining the string contained within a string URI and for
-determining whether two string URIs are equivalent.
+This document defines string URIs and the "string" URI scheme. A string URI identifies a value, most often (but not
+necessarily) a string of character data, from an application-dependent set of values and can be used as a method of
+specifying such a value in a context where a syntactically correct URI is required. String URIs have a strict syntax
+and well-defined rules for processing and determining equivalence that intend to make it easy for applications to
+consume them.
 
 --- middle
 
@@ -49,17 +49,80 @@ TODO Introduction
 
 # Syntax
 
-Uses the syntax and the "ALPHA" and "DIGIT" rules defined by {{!RFC2234}}.
+Using ABNF and the "DIGIT" and "ALPHA" rules defined by {{!RFC2234}}, the syntax of string URIs is defined by the
+"string-URI" rule below:
 
-Uses the "pct-encoded" rule defined by {{!RFC3986}}.
+~~~ abnf
+string-URI = %x73.74.72.69.6E.67 ":" data
+data       = *( DIGIT / ALPHA / "-" / "_" / pct )
 
-```abnf
+pct        = "%" ( pct-1 / pct-2 / pct-3 / pct-4 )
 
-string-uri = "string:" string-data *( ALPHA / DIGIT / "-" / "_" / pct-encoded )
+pct-1      = %x30-31 hex
+           / "2" ( DIGIT / %x41-43 / %x45-46 )
+           / "3" %x41-46
+           / ( "4" / "6" ) "0"
+           / "5" %x42-45
+           / "7" %x42-46
 
-```
+pct-2      = pct-2-1 pct-cont
+pct-2-1    = %x43 ( %x32-39 / %x41-46 )
+           / %x44 hex
 
-Additional conformance rules that can not be effectively described in ABNF form are also employed.
+pct-3      = pct-3-1-2 pct-cont
+pct-3-1-2  = %x45 ( "0%" %x41-42 hex
+                  / ( %x31-39 / %x41-43 / %x45-46 ) pct-cont
+                  / %x44 "%" %x38-39 hex
+                  )
+
+pct-4      = pct-4-1-2 pct-cont pct-cont
+pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
+                  / %x31-33 pct-cont
+                  ) "4%8" hex
+
+pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
+
+hex        = %x30-39 / %x41-46
+
+~~~
+
+The syntax of string URIs can also be described by the following POSIX regular expression (whitespace and newlines
+have only been included to improve readability and should be ignored):
+
+~~~
+^string:(([0-9A-Za-z\-_]|%(
+ [01][0-9A-F]
+ |2[0-9ABCEF]
+ |3[A-F]
+ |[46]0
+ |5[B-E]
+ |7[B-F]
+ |(
+  (C[2-9A-F]|D[0-9A-F])
+  |E(
+   0%[AB][0-9A-F]
+   |[1-9ABCEF]%[89AB][0-9A-F]
+   |D%[89][0-9A-F]
+  )
+  |F(
+   0%[9AB][0-9A-F]
+   |[123]%[89AB][0-9A-F]
+   |4%8[0-9A-F]
+  )%[89AB][0-9A-F]
+ )%[89AB][0-9A-F]
+))*)$
+~~~
+
+In slightly less technical terms, the syntax of string URIs can be also described as follows (non-normative):
+
+- The URI must begin with a case-sensitive match for "string" in all lowercase followed by a colon (`:`).
+- The substring immediately following the colon must only contain the digits 0 to 9, the letters A to Z in both
+  uppercase and lowercase, the hyphen-minus (`-`), the low line (`_`) or percent-encoded octets (see
+  {{Section 2.1 of ?RFC3986}}).
+- The substring immediately following the colon may be empty (meaning "string:" is a valid string URI).
+- Percent-encoded octets must not use lowercase hexadecimal digits.
+- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), `-` or `_`.
+- Percent-encoded octets must decode to valid UTF-8.
 
 # Security Considerations
 
