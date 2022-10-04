@@ -68,7 +68,7 @@ Table of Contents
    2.  Terminology
    3.  Syntax
    4.  Usage
-     4.1.  Defining and Using String URIs
+     4.1.  Using String URIs
      4.2.  Comparing String URIs
      4.3.  Locating Resources Identified by String URIs
    5.  Conformance
@@ -78,9 +78,7 @@ Table of Contents
    7.  Security Considerations
    8.  IANA Considerations
      8.1.  Registration of the "string" URI Scheme
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   9.  Normative References
    Acknowledgments
    Author's Address
 
@@ -94,9 +92,9 @@ Table of Contents
       easy for humans to remember.
 
    *  Identifiers are convenient for developers and users of
-      applications to define and use.
+      applications to use.
 
-   *  An identifier that identifies a string consisting of only
+   *  An identifier that identifies a string consisting solely of
       alphanumeric ASCII characters may safely include that string as a
       component of the identifier itself without requiring any
       preprocessing.
@@ -115,11 +113,29 @@ Table of Contents
 3.  Syntax
 
    The string URI syntax is a subset of the generic URI syntax defined
-   in [rfc3986].
+   in [RFC3986].
 
-   Using ABNF and the "DIGIT" and "ALPHA" rules defined in [RFC2234],
-   the string URI syntax is defined by the "string-URI" rule defined
-   below:
+   A non-normative description of the string URI syntax can be
+   constructed as follows:
+
+   *  The URI must begin with a case-sensitive match for "string" in all
+      lowercase immediately followed by a colon (":").
+
+   *  Everything following the colon must consist solely of any
+      combination of the digits 0 to 9, the letters A to Z in both
+      uppercase and lowercase, the hyphen-minus ("-"), the low line
+      ("_") or percent-encoded octets (see Section 2.1 of [RFC3986]).
+
+   *  Percent-encoded octets must use uppercase hexadecimal digits.
+
+   *  Percent-encoded octets must decode to valid UTF-8.
+
+   *  Percent-encoded octets must not decode to 0-9, A-Z (case-
+      insensitive), "-" or "_".
+
+   Using ABNF and the "DIGIT" and "ALPHA" rules defined in [RFC2234], a
+   formal definition of the string URI syntax is described by the
+   "string-URI" rule below:
 
    string-URI = %x73.74.72.69.6E.67 ":" data
    data       = *( DIGIT / ALPHA / "-" / "_" / pct )
@@ -153,6 +169,12 @@ Table of Contents
 
    hex        = %x30-39 / %x41-46
 
+   Although the syntax may appear daunting, most complexity stems from
+   the "pct" rule for percent-encoded octets being defined such that
+   they can not decode to invalid UTF-8 and that they are not used to
+   encode characters such as digits or letters that can be used
+   unencoded.
+
    The string URI syntax can also be described by the following POSIX
    regular expression (whitespace included for readability but should be
    ignored):
@@ -179,27 +201,9 @@ Table of Contents
     )%[89AB][0-9A-F]
    ))*)$
 
-   In slightly less technical terms, the string URI syntax can be
-   described as follows (non-normative):
-
-   *  The URI must begin with a case-sensitive match for "string" in all
-      lowercase immediately followed by a colon (":").
-
-   *  Everything following the colon must consist solely of any
-      combination of the digits 0 to 9, the letters A to Z in both
-      uppercase and lowercase, the hyphen-minus ("-"), the low line
-      ("_") or percent-encoded octets (see Section 2.1 of [RFC3986]).
-
-   *  Percent-encoded octets must use uppercase hexadecimal digits.
-
-   *  Percent-encoded octets must decode to valid UTF-8.
-
-   *  Percent-encoded octets must not decode to 0-9, A-Z (case-
-      insensitive), "-" or "_".
-
 4.  Usage
 
-4.1.  Defining and Using String URIs
+4.1.  Using String URIs
 
    TODO Defining and Using String URIs
 
@@ -215,7 +219,8 @@ Table of Contents
 
 5.1.  Conformance Requirements
 
-   A string URI MUST conform to the syntax described in Section 3.
+   A string URI MUST conform to the "string-URI" syntax rule described
+   in Section 3.
 
 5.2.  Handling Nonconforming String URIs
 
@@ -253,9 +258,7 @@ Table of Contents
    References:
       This document
 
-9.  References
-
-9.1.  Normative References
+9.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -266,7 +269,7 @@ Table of Contents
               Specifications: ABNF", RFC 2234, DOI 10.17487/RFC2234,
               November 1997, <https://www.rfc-editor.org/rfc/rfc2234>.
 
-   [rfc3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
               <https://www.rfc-editor.org/rfc/rfc3986>.
@@ -274,13 +277,6 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
-9.2.  Informative References
-
-   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
-              Resource Identifier (URI): Generic Syntax", STD 66,
-              RFC 3986, DOI 10.17487/RFC3986, January 2005,
-              <https://www.rfc-editor.org/rfc/rfc3986>.
 
 Acknowledgments
 
