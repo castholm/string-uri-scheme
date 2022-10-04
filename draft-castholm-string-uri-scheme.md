@@ -34,7 +34,7 @@ informative:
 This document defines string URIs and the "string" URI scheme. A string URI identifies an application-dependent value
 (most commonly, but not necessarily, a string of characters) and can be used as a method of specifying such a value in
 a context where a URI is required. String URIs have a strict syntax and well-defined rules for processing and
-determining equivalence that make it simple for applications to consume them.
+comparing that make it simple for applications to consume them.
 
 --- middle
 
@@ -44,19 +44,20 @@ A string URI is a URI that identifies an application-dependent value, such as a 
 "string" URI scheme, which is designed to meet the following requirements:
 
 - Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.
-- Identifiers are convenient for developers and users of applications to define, create and process.
+- Identifiers are convenient for developers and users of applications to define and use.
 - An identifier that identifies a string consisting of only alphanumeric ASCII characters may safely include that
   string as a component of the identifier itself without requiring any preprocessing.
-- An identifier has exactly one valid representation, making determining whether two identifiers for equality very
-  simple.
+- An identifier has exactly one valid representation, making testing two identifiers for equality very simple.
 
-# Conventions and Definitions
+# Terminology
 
 {::boilerplate bcp14-tagged}
 
-# Syntax
+# Syntax {#syntax}
 
-Using ABNF and the "DIGIT" and "ALPHA" rules defined by {{!RFC2234}}, the syntax of string URIs is defined by the
+The string URI syntax is a subset of the generic URI syntax defined in {{!rfc3986}}.
+
+Using ABNF and the "DIGIT" and "ALPHA" rules defined in {{!RFC2234}}, the string URI syntax is defined by the
 "string-URI" rule defined below:
 
 ~~~ abnf
@@ -93,8 +94,8 @@ pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 hex        = %x30-39 / %x41-46
 ~~~
 
-The syntax of string URIs can also be described by the following POSIX regular expression (whitespace and newlines
-have only been included to improve readability and should be ignored):
+The string URI syntax can also be described by the following POSIX regular expression (whitespace included for
+readability but should be ignored):
 
 ~~~
 ^string\:(([0-9A-Za-z\-_]|%(
@@ -120,14 +121,43 @@ have only been included to improve readability and should be ignored):
 ))*)$
 ~~~
 
-In slightly less technical terms, the syntax of string URIs can be described as follows (non-normative):
+In slightly less technical terms, the string URI syntax can be described as follows (non-normative):
 
 - The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
-- Everything following the colon must only contain the digits 0 to 9, the letters A to Z in both uppercase and
-  lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see {{Section 2.1 of ?RFC3986}}).
-- Percent-encoded octets must not use lowercase hexadecimal digits.
+- Everything following the colon must consist solely of any combination of the digits 0 to 9, the letters A to Z in
+  both uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
+  {{Section 2.1 of ?RFC3986}}).
+- Percent-encoded octets must use uppercase hexadecimal digits.
 - Percent-encoded octets must decode to valid UTF-8.
 - Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
+
+# Usage
+
+## Defining and Using String URIs
+
+TODO Defining and Using String URIs
+
+## Comparing String URIs
+
+TODO Comparing String URIs
+
+## Locating Resources Identified by String URIs
+
+TODO Locating Resources Identified by String URIs
+
+# Conformance
+
+## Conformance Requirements
+
+A string URI MUST conform to the syntax described in {{#syntax}}.
+
+## Handling Nonconforming String URIs
+
+TODO Handling Nonconforming String URIs
+
+# Examples
+
+TODO Examples
 
 # Security Considerations
 
@@ -145,8 +175,8 @@ Status:
 : Provisional
 
 Applications/protocols that use this scheme name:
-: Any application or protocol may use this scheme for any purpose, so long as the use conforms to the rules defined in
-  this document.
+: Any application or protocol may use this scheme for any purpose, provided that its use conforms to the rules defined
+  in this document.
 
 Contact:
 : N/A
