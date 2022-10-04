@@ -7,11 +7,10 @@
 <title>The "string" URI Scheme</title>
 <meta content="Carl Åstholm" name="author">
 <meta content='
-       This document defines string URIs and the "string" URI scheme. A string URI identifies a value, most often (but not
-necessarily) a string of character data, from an application-dependent set of values and can be used as a method of
-specifying such a value in a context where a syntactically correct URI is required. String URIs have a strict syntax
-and well-defined rules for processing and determining equivalence that intend to make it easy for applications to
-consume them. 
+       This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
+specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
+for processing and determining equivalence that make it easy for applications to consume them. 
     ' name="description">
 <meta content="xml2rfc 3.15.0" name="generator">
 <meta content="string" name="keyword">
@@ -1075,11 +1074,10 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">The "string" URI Scheme</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines string URIs and the "string" URI scheme. A string URI identifies a value, most often (but not
-necessarily) a string of character data, from an application-dependent set of values and can be used as a method of
-specifying such a value in a context where a syntactically correct URI is required. String URIs have a strict syntax
-and well-defined rules for processing and determining equivalence that intend to make it easy for applications to
-consume them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
+specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
+for processing and determining equivalence that make it easy for applications to consume them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1226,7 +1224,8 @@ pct-3-1-2  = %x45 ( "0%" %x41-42 hex
 pct-4      = pct-4-1-2 pct-cont pct-cont
 pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
                   / %x31-33 pct-cont
-                  ) "4%8" hex
+                  / "4%8" hex
+                  )
 
 pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 
@@ -1238,7 +1237,7 @@ hex        = %x30-39 / %x41-46
 have only been included to improve readability and should be ignored):<a href="#section-3-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3-4">
 <pre>
-^string:(([0-9A-Za-z\-_]|%(
+^string\:(([0-9A-Za-z\-_]|%(
  [01][0-9A-F]
  |2[0-9ABCEF]
  |3[A-F]
@@ -1261,21 +1260,21 @@ have only been included to improve readability and should be ignored):<a href="#
 ))*)$
 </pre><a href="#section-3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-3-5">In slightly less technical terms, the syntax of string URIs can be also described as follows (non-normative):<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">In slightly less technical terms, the syntax of string URIs can be described as follows (non-normative):<a href="#section-3-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-6.1">The URI must begin with a case-sensitive match for "string" in all lowercase followed by a colon (<code>:</code>).<a href="#section-3-6.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3-6.1">The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").<a href="#section-3-6.1" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-3-6.2">The substring immediately following the colon must only contain the digits 0 to 9, the letters A to Z in both
-uppercase and lowercase, the hyphen-minus (<code>-</code>), the low line (<code>_</code>) or percent-encoded octets (see
+uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
 <span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).<a href="#section-3-6.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.3">The substring immediately following the colon may be empty (meaning "string:" is a valid string URI).<a href="#section-3-6.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.3">The substring immediately following the colon may also be empty (meaning "string:" is a valid string URI).<a href="#section-3-6.3" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-3-6.4">Percent-encoded octets must not use lowercase hexadecimal digits.<a href="#section-3-6.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.5">Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), <code>-</code> or <code>_</code>.<a href="#section-3-6.5" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.5">Percent-encoded octets must decode to valid UTF-8.<a href="#section-3-6.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-3-6.6">Percent-encoded octets must decode to valid UTF-8.<a href="#section-3-6.6" class="pilcrow">¶</a>
+        <li class="normal" id="section-3-6.6">Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".<a href="#section-3-6.6" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
