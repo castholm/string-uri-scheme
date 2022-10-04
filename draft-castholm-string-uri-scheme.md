@@ -31,10 +31,10 @@ informative:
 
 --- abstract
 
-This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most often, but not
+This document defines string URIs and the "string" URI scheme. A string URI identifies a value (most commonly, but not
 necessarily, a string of characters) from an application-dependent set of values and can be used as a method of
 specifying such a value in a context where a URI is required. String URIs have a strict syntax and well-defined rules
-for processing and determining equivalence that make it easy for applications to consume them.
+for processing and determining equivalence that make it simple for applications to consume them.
 
 --- middle
 
@@ -49,7 +49,7 @@ TODO Introduction
 # Syntax
 
 Using ABNF and the "DIGIT" and "ALPHA" rules defined by {{!RFC2234}}, the syntax of string URIs is defined by the
-"string-URI" rule below:
+"string-URI" rule defined below:
 
 ~~~ abnf
 string-URI = %x73.74.72.69.6E.67 ":" data
@@ -83,7 +83,6 @@ pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
 pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 
 hex        = %x30-39 / %x41-46
-
 ~~~
 
 The syntax of string URIs can also be described by the following POSIX regular expression (whitespace and newlines
@@ -116,10 +115,8 @@ have only been included to improve readability and should be ignored):
 In slightly less technical terms, the syntax of string URIs can be described as follows (non-normative):
 
 - The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
-- The substring immediately following the colon must only contain the digits 0 to 9, the letters A to Z in both
-  uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
-  {{Section 2.1 of ?RFC3986}}).
-- The substring immediately following the colon may also be empty (meaning "string:" is a valid string URI).
+- Everything following the colon must only contain the digits 0 to 9, the letters A to Z in both uppercase and
+  lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see {{Section 2.1 of ?RFC3986}}).
 - Percent-encoded octets must not use lowercase hexadecimal digits.
 - Percent-encoded octets must decode to valid UTF-8.
 - Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
@@ -130,7 +127,26 @@ TODO Security Considerations
 
 # IANA Considerations
 
-TODO IANA Considerations
+## Registration of the "string" URI Scheme
+
+{:vspace}
+Scheme name:
+: string
+
+Status:
+: Provisional
+
+Applications/protocols that use this scheme name:
+: N/A
+
+Contact:
+: N/A
+
+Change controller:
+: N/A
+
+References:
+: This document
 
 --- back
 
