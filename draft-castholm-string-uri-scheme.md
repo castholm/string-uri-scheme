@@ -44,8 +44,8 @@ A string URI is a URI that identifies an application-dependent value, such as a 
 "string" URI scheme, which is designed to meet the following requirements:
 
 - Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.
-- Identifiers are convenient for developers and users of applications to define and use.
-- An identifier that identifies a string consisting of only alphanumeric ASCII characters may safely include that
+- Identifiers are convenient for developers and users of applications to use.
+- An identifier that identifies a string consisting solely of alphanumeric ASCII characters may safely include that
   string as a component of the identifier itself without requiring any preprocessing.
 - An identifier has exactly one valid representation, making testing two identifiers for equality very simple.
 
@@ -55,10 +55,20 @@ A string URI is a URI that identifies an application-dependent value, such as a 
 
 # Syntax {#syntax}
 
-The string URI syntax is a subset of the generic URI syntax defined in {{!rfc3986}}.
+The string URI syntax is a subset of the generic URI syntax defined in {{!RFC3986}}.
 
-Using ABNF and the "DIGIT" and "ALPHA" rules defined in {{!RFC2234}}, the string URI syntax is defined by the
-"string-URI" rule defined below:
+A non-normative description of the string URI syntax can be constructed as follows:
+
+- The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
+- Everything following the colon must consist solely of any combination of the digits 0 to 9, the letters A to Z in
+  both uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
+  {{Section 2.1 of ?RFC3986}}).
+- Percent-encoded octets must use uppercase hexadecimal digits.
+- Percent-encoded octets must decode to valid UTF-8.
+- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
+
+Using ABNF and the "DIGIT" and "ALPHA" rules defined in {{!RFC2234}}, a formal definition of the string URI syntax is
+described by the "string-URI" rule below:
 
 ~~~ abnf
 string-URI = %x73.74.72.69.6E.67 ":" data
@@ -94,6 +104,10 @@ pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
 hex        = %x30-39 / %x41-46
 ~~~
 
+Although the syntax may appear daunting, most complexity stems from the "pct" rule for percent-encoded octets being
+defined such that they can not decode to invalid UTF-8 and that they are not used to encode characters such as digits
+or letters that can be used unencoded.
+
 The string URI syntax can also be described by the following POSIX regular expression (whitespace included for
 readability but should be ignored):
 
@@ -121,19 +135,9 @@ readability but should be ignored):
 ))*)$
 ~~~
 
-In slightly less technical terms, the string URI syntax can be described as follows (non-normative):
-
-- The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
-- Everything following the colon must consist solely of any combination of the digits 0 to 9, the letters A to Z in
-  both uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
-  {{Section 2.1 of ?RFC3986}}).
-- Percent-encoded octets must use uppercase hexadecimal digits.
-- Percent-encoded octets must decode to valid UTF-8.
-- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
-
 # Usage
 
-## Defining and Using String URIs
+## Using String URIs
 
 TODO Defining and Using String URIs
 
@@ -149,7 +153,7 @@ TODO Locating Resources Identified by String URIs
 
 ## Conformance Requirements
 
-A string URI MUST conform to the syntax described in {{syntax}}.
+A string URI MUST conform to the "string-URI" syntax rule described in {{syntax}}.
 
 ## Handling Nonconforming String URIs
 
