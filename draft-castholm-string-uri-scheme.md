@@ -21,6 +21,7 @@ author:
 
 normative:
   UNICODE:
+    -: UNICODE
     title: 'The Unicode Consortium. The Unicode Standard, Version 15.0.0, (Mountain View, CA: The Unicode Consortium, 2022. ISBN 978-1-936213-32-0)'
     target: 'https://www.unicode.org/versions/Unicode15.0.0/'
 
@@ -53,7 +54,7 @@ There exists a need for a simple URI (Uniform Resource Identifier) scheme that s
 
 Existing URI schemes satisfy some, but not all, of the above requirements.
 
-- HTTP (Hypertext Transfer Protocol) URIs ({{Section 4.2 of ?RFC9110}}) are familiar to most users and can include
+- HTTP (Hypertext Transfer Protocol) URIs {{?RFC9110 (Section 4.2)}} are familiar to most users and can include
   arbitrary application-dependent data. However, minting new HTTP URIs require a registered domain name that may
   change owners in the future, making them inconvenient to use as stable identifiers, and the rules for comparing
   identifiers are poorly specified.
@@ -83,7 +84,7 @@ error type, using a method defined and specified by the application.
 {::boilerplate bcp14-tagged}
 
 For simplicity, this specification uses the term "character(s)" to mean "Unicode scalar value(s)" as defined by
-definition D76 in Section 3.9 of {{!UNICODE}}. When this specification requires attention to be carefully directed
+{{definition D76 in Section 3.9 of -UNICODE}}. When this specification requires attention to be carefully directed
 toward the specific implications of "Unicode scalar value(s)", that specific term is used in order to reduce
 ambiguity.
 
