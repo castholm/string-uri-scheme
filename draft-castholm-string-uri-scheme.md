@@ -84,7 +84,7 @@ error type, using a method defined and specified by the application.
 {::boilerplate bcp14-tagged}
 
 For simplicity, this specification uses the term "character(s)" to mean "Unicode scalar value(s)" as defined by
-{{definition D76 in Section 3.9 of -UNICODE}}. When this specification requires attention to be carefully directed
+definition D76 in Section 3.9 of {{-UNICODE}}. When this specification requires attention to be carefully directed
 toward the specific implications of "Unicode scalar value(s)", that specific term is used in order to reduce
 ambiguity.
 
