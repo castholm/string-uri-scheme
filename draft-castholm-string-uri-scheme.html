@@ -7,10 +7,11 @@
 <title>The "string" URI Scheme</title>
 <meta content="Carl Åstholm" name="author">
 <meta content='
-       This document defines string URIs and the "string" URI scheme. A string URI identifies an application-dependent value
-(most commonly, but not necessarily, a string of characters) and can be used as a method of specifying such a value in
-a context where a URI is required. String URIs have a strict syntax and well-defined rules for processing and
-comparing that make it simple for applications to consume them. 
+       This document defines the "string" URI scheme, string URIs and rules for applications that use string URIs. A string
+URI includes a payload representing a string of characters that can be interpreted in an application-dependent manner
+to identify and possibly locate a resource. This enables applications to specify such a string in a context where a
+proper URI is required. String URIs have a strict syntax and well-defined rules for processing and comparing that make
+them simple for applications to use. 
     ' name="description">
 <meta content="xml2rfc 3.15.0" name="generator">
 <meta content="string" name="keyword">
@@ -1044,7 +1045,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Åstholm</td>
-<td class="center">Expires 7 April 2023</td>
+<td class="center">Expires 9 April 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1057,12 +1058,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-castholm-string-uri-scheme-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-10-04" class="published">4 October 2022</time>
+<time datetime="2022-10-06" class="published">6 October 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-04-07">7 April 2023</time></dd>
+<dd class="expires"><time datetime="2023-04-09">9 April 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1074,10 +1075,11 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">The "string" URI Scheme</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines string URIs and the "string" URI scheme. A string URI identifies an application-dependent value
-(most commonly, but not necessarily, a string of characters) and can be used as a method of specifying such a value in
-a context where a URI is required. String URIs have a strict syntax and well-defined rules for processing and
-comparing that make it simple for applications to consume them.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines the "string" URI scheme, string URIs and rules for applications that use string URIs. A string
+URI includes a payload representing a string of characters that can be interpreted in an application-dependent manner
+to identify and possibly locate a resource. This enables applications to specify such a string in a context where a
+proper URI is required. String URIs have a strict syntax and well-defined rules for processing and comparing that make
+them simple for applications to use.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1109,7 +1111,7 @@ comparing that make it simple for applications to consume them.<a href="#section
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1142,21 +1144,27 @@ comparing that make it simple for applications to consume them.<a href="#section
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-syntax" class="internal xref">Syntax</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-usage" class="internal xref">Usage</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-structure-and-usage" class="internal xref">Structure and Usage</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-using-string-uris" class="internal xref">Using String URIs</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-components-of-a-string-uri" class="internal xref">Components of a String URI</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-comparing-string-uris" class="internal xref">Comparing String URIs</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-using-string-uris" class="internal xref">Using String URIs</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-locating-resources-identifi" class="internal xref">Locating Resources Identified by String URIs</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-obtaining-the-string-uri-pa" class="internal xref">Obtaining the String URI Payload</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-comparing-string-uris" class="internal xref">Comparing String URIs</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-locating-resources-identifi" class="internal xref">Locating Resources Identified by String URIs</a></p>
 </li>
             </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-syntax" class="internal xref">Syntax</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-conformance" class="internal xref">Conformance</a></p>
@@ -1165,7 +1173,7 @@ comparing that make it simple for applications to consume them.<a href="#section
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-conformance-requirements" class="internal xref">Conformance Requirements</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-handling-nonconforming-stri" class="internal xref">Handling Nonconforming String URIs</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-recommendations-for-handlin" class="internal xref">Recommendations for Handling Nonconforming String URIs</a></p>
 </li>
             </ul>
 </li>
@@ -1184,7 +1192,15 @@ comparing that make it simple for applications to consume them.<a href="#section
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
@@ -1201,19 +1217,51 @@ comparing that make it simple for applications to consume them.<a href="#section
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">A string URI is a URI that identifies an application-dependent value, such as a string of characters. It uses the
-"string" URI scheme, which is designed to meet the following requirements:<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">Sometimes, application developers find themselves in situations where a particular protocol mandates the use of URIs
+(Uniform Resource Identifiers <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>). Most popular URI schemes are designed for identifiers to have very
+specific meanings and to be globally unique. This can be inconvenient when only a simple, locally unique identifier
+with an application-dependent meaning is desired.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">There exists a need for a simple URI (Uniform Resource Identifier) scheme that satisfies the following requirements:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-2.1">Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.<a href="#section-1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1-3.1">Identifiers include a string of characters that can be interpreted in an application-dependent manner to identify
+and possibly locate a resource.<a href="#section-1-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-2.2">Identifiers are convenient for developers and users of applications to use.<a href="#section-1-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-3.2">Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.<a href="#section-1-3.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-2.3">An identifier that identifies a string consisting solely of alphanumeric ASCII characters may safely include that
-string as a component of the identifier itself without requiring any preprocessing.<a href="#section-1-2.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-3.3">Identifiers are convenient for application developers and users to use.<a href="#section-1-3.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-2.4">An identifier has exactly one valid representation, making testing two identifiers for equality very simple.<a href="#section-1-2.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-3.4">Identifiers have well-defined rules for comparing that are trivial for application developers to implement.<a href="#section-1-3.4" class="pilcrow">¶</a>
 </li>
       </ul>
+<p id="section-1-4">Existing URI schemes satisfy some, but not all, of the above requirements.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1-5.1">HTTP (Hypertext Transfer Protocol) URIs <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>] (<a href="https://rfc-editor.org/rfc/rfc9110#section-4.2" class="relref">Section 4.2</a>)</span> are familiar to most users and can include
+arbitrary application-dependent data. However, minting new HTTP URIs require a registered domain name that may
+change owners in the future, making them inconvenient to use as stable identifiers, and the rules for comparing
+identifiers are poorly specified.<a href="#section-1-5.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.2">URNs (Uniform Resource Names <span>[<a href="#RFC8141" class="cite xref">RFC8141</a>]</span>) require using pre-existing namespaces, which come with their own rules
+and restrictions, or registering new namespaces, which is often inconvenient. While URNs have well-defined rules for
+comparing, such rules are non-trivial to implement in practice.<a href="#section-1-5.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.3">Data URIs <span>[<a href="#RFC2397" class="cite xref">RFC2397</a>]</span> are simple to use, but no normative rules for comparing data URIs have been specified and
+they technically only identify and locate their own included payload.<a href="#section-1-5.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-1-5.4">Tag URIs <span>[<a href="#RFC4151" class="cite xref">RFC4151</a>]</span> have simple, well-defined rules for comparing, but because they are designed to be unique
+across time and space their structure may feel nedlessly complex for applications that only require local
+uniqueness.<a href="#section-1-5.4" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-1-6">This specification introduces the "string" URI scheme, which is designed to satisfy all of the above requirements.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">The following is an example of an identifier using the "string" URI scheme:<a href="#section-1-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-1-8">
+<pre>
+   string:UserNotFoundError
+</pre><a href="#section-1-8" class="pilcrow">¶</a>
+</div>
+<p id="section-1-9">Such an identifier might, for example, identify an application-specific error type representing an error indicating
+that a user was not able to be found. The same identifier might also be used to locate more information about the
+error type, using a method defined and specified by the application.<a href="#section-1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1225,126 +1273,134 @@ string as a component of the identifier itself without requiring any preprocessi
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">For simplicity, this specification uses the term "character(s)" to mean "Unicode scalar value(s)" as defined by
+definition D76 in Section 3.9 of <span>[<a href="#UNICODE" class="cite xref">UNICODE</a>]</span>. When this specification requires attention to be carefully directed
+toward the specific implications of "Unicode scalar value(s)", that specific term is used in order to reduce
+ambiguity.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="syntax">
+<div id="structure-and-usage">
 <section id="section-3">
-      <h2 id="name-syntax">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-syntax" class="section-name selfRef">Syntax</a>
+      <h2 id="name-structure-and-usage">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-structure-and-usage" class="section-name selfRef">Structure and Usage</a>
       </h2>
-<p id="section-3-1">The string URI syntax is a subset of the generic URI syntax defined in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">A non-normative description of the string URI syntax can be constructed as follows:<a href="#section-3-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3-3.1">The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").<a href="#section-3-3.1" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-3-3.2">Everything following the colon must consist solely of any combination of the digits 0 to 9, the letters A to Z in
-both uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
-<span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>).<a href="#section-3-3.2" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-3-3.3">Percent-encoded octets must use uppercase hexadecimal digits.<a href="#section-3-3.3" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-3-3.4">Percent-encoded octets must decode to valid UTF-8.<a href="#section-3-3.4" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="section-3-3.5">Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".<a href="#section-3-3.5" class="pilcrow">¶</a>
-</li>
-      </ul>
-<p id="section-3-4">Using ABNF and the "DIGIT" and "ALPHA" rules defined in <span>[<a href="#RFC2234" class="cite xref">RFC2234</a>]</span>, a formal definition of the string URI syntax is
-described by the "string-URI" rule below:<a href="#section-3-4" class="pilcrow">¶</a></p>
-<div id="section-3-5">
-<pre class="lang-abnf sourcecode">
-string-URI = %x73.74.72.69.6E.67 ":" data
-data       = *( DIGIT / ALPHA / "-" / "_" / pct )
-
-pct        = "%" ( pct-1 / pct-2 / pct-3 / pct-4 )
-
-pct-1      = %x30-31 hex
-           / "2" ( DIGIT / %x41-43 / %x45-46 )
-           / "3" %x41-46
-           / ( "4" / "6" ) "0"
-           / "5" %x42-45
-           / "7" %x42-46
-
-pct-2      = pct-2-1 pct-cont
-pct-2-1    = %x43 ( %x32-39 / %x41-46 )
-           / %x44 hex
-
-pct-3      = pct-3-1-2 pct-cont
-pct-3-1-2  = %x45 ( "0%" %x41-42 hex
-                  / ( %x31-39 / %x41-43 / %x45-46 ) pct-cont
-                  / %x44 "%" %x38-39 hex
-                  )
-
-pct-4      = pct-4-1-2 pct-cont pct-cont
-pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
-                  / %x31-33 pct-cont
-                  / "4%8" hex
-                  )
-
-pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
-
-hex        = %x30-39 / %x41-46
-</pre><a href="#section-3-5" class="pilcrow">¶</a>
-</div>
-<p id="section-3-6">Although the syntax may appear daunting, most complexity stems from the "pct" rule for percent-encoded octets being
-defined such that they can not decode to invalid UTF-8 and that they are not used to encode characters such as digits
-or letters that can be used unencoded.<a href="#section-3-6" class="pilcrow">¶</a></p>
-<p id="section-3-7">The string URI syntax can also be described by the following POSIX regular expression (whitespace included for
-readability but should be ignored):<a href="#section-3-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3-8">
-<pre>
-^string\:(([0-9A-Za-z\-_]|%(
- [01][0-9A-F]
- |2[0-9ABCEF]
- |3[A-F]
- |[46]0
- |5[B-E]
- |7[B-F]
- |(
-  (C[2-9A-F]|D[0-9A-F])
-  |E(
-   0%[AB][0-9A-F]
-   |[1-9ABCEF]%[89AB][0-9A-F]
-   |D%[89][0-9A-F]
-  )
-  |F(
-   0%[9AB][0-9A-F]
-   |[123]%[89AB][0-9A-F]
-   |4%8[0-9A-F]
-  )%[89AB][0-9A-F]
- )%[89AB][0-9A-F]
-))*)$
-</pre><a href="#section-3-8" class="pilcrow">¶</a>
-</div>
+<div id="components-of-a-string-uri">
+<section id="section-3.1">
+        <h3 id="name-components-of-a-string-uri">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-components-of-a-string-uri" class="section-name selfRef">Components of a String URI</a>
+        </h3>
+<p id="section-3.1-1">TODO Components of a String URI<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="usage">
-<section id="section-4">
-      <h2 id="name-usage">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-usage" class="section-name selfRef">Usage</a>
-      </h2>
 <div id="using-string-uris">
-<section id="section-4.1">
+<section id="section-3.2">
         <h3 id="name-using-string-uris">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-using-string-uris" class="section-name selfRef">Using String URIs</a>
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-using-string-uris" class="section-name selfRef">Using String URIs</a>
         </h3>
-<p id="section-4.1-1">TODO Defining and Using String URIs<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">TODO Using String URIs<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="obtaining-the-string-uri-payload">
+<section id="section-3.3">
+        <h3 id="name-obtaining-the-string-uri-pa">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-obtaining-the-string-uri-pa" class="section-name selfRef">Obtaining the String URI Payload</a>
+        </h3>
+<p id="section-3.3-1">TODO Obtaining the String URI Payload<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="comparing-string-uris">
-<section id="section-4.2">
+<section id="section-3.4">
         <h3 id="name-comparing-string-uris">
-<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-comparing-string-uris" class="section-name selfRef">Comparing String URIs</a>
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-comparing-string-uris" class="section-name selfRef">Comparing String URIs</a>
         </h3>
-<p id="section-4.2-1">TODO Comparing String URIs<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">TODO Comparing String URIs<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="locating-resources-identified-by-string-uris">
-<section id="section-4.3">
+<section id="section-3.5">
         <h3 id="name-locating-resources-identifi">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-locating-resources-identifi" class="section-name selfRef">Locating Resources Identified by String URIs</a>
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-locating-resources-identifi" class="section-name selfRef">Locating Resources Identified by String URIs</a>
         </h3>
-<p id="section-4.3-1">TODO Locating Resources Identified by String URIs<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-1">TODO Locating Resources Identified by String URIs<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 </section>
+</div>
+</section>
+</div>
+<div id="syntax">
+<section id="section-4">
+      <h2 id="name-syntax">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-syntax" class="section-name selfRef">Syntax</a>
+      </h2>
+<p id="section-4-1">The string URI syntax is a subset of the generic URI syntax defined in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">Using ABNF and including the "DIGIT" and "ALPHA" rules defined in <span>[<a href="#RFC2234" class="cite xref">RFC2234</a>]</span>, the string URI syntax is defined by
+the "string-URI" rule in the following ABNF specification:<a href="#section-4-2" class="pilcrow">¶</a></p>
+<div id="section-4-3">
+<pre class="lang-abnf sourcecode">
+   string-URI  = %x73.74.72.69.6E.67 ":" payload
+   payload     = *( unencoded / pct-encoded )
+   unencoded   = DIGIT / ALPHA / "-" / "_"
+   pct-encoded = "%" ( pct-1 / pct-2 / pct-3 / pct-4 )
+
+   pct-1       = %x30-31 upper-hex
+               / "2" ( DIGIT / %x41-43 / %x45-46 )
+               / "3" %x41-46
+               / ( "4" / "6" ) "0"
+               / "5" %x42-45
+               / "7" %x42-46
+
+   pct-2       = pct-2-1 pct-cont
+   pct-2-1     = %x43 ( %x32-39 / %x41-46 )
+               / %x44 upper-hex
+
+   pct-3       = pct-3-1-2 pct-cont
+   pct-3-1-2   = %x45 ( "0%" %x41-42 upper-hex
+                      / ( %x31-39 / %x41-43 / %x45-46 ) pct-cont
+                      / %x44 "%" %x38-39 upper-hex
+                      )
+
+   pct-4       = pct-4-1-2 pct-cont pct-cont
+   pct-4-1-2   = %x46 ( "0%" ( "9" / %x41-42 ) upper-hex
+                      / %x31-33 pct-cont
+                      / "4%8" upper-hex
+                      )
+
+   pct-cont    = "%" ( %x38-39 / %x41-42 ) upper-hex
+
+   upper-hex   = %x30-39 / %x41-46
+</pre><a href="#section-4-3" class="pilcrow">¶</a>
+</div>
+<p id="section-4-4">Readers should note that the "pct-encoded" rule is NOT equivalent to the rule of the same name found in
+<span><a href="https://rfc-editor.org/rfc/rfc3986#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> and instead describes a much more constrained syntax that ensures that percent-encoded
+octets use only uppercase hexadecimal digits and do not decode to invalid UTF-8 or characters matched by the
+"unencoded" rule.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">Observant readers will also note that the "unencoded" rule describes the base64url alphabet found in
+<span><a href="https://rfc-editor.org/rfc/rfc4648#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>, which may already be familiar.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">The string URI syntax is also described by the following POSIX regular expression (where whitespace is included for
+readability but should be ignored):<a href="#section-4-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4-7">
+<pre>
+   ^string:(([0-9A-Za-z\-_]|%(
+    [01][0-9A-F]|
+    2[0-9ABCEF]|
+    3[A-F]|
+    [46]0|
+    5[B-E]|
+    7[B-F]|
+    (
+     (C[2-9A-F]|D[0-9A-F])|
+     E(
+      0%[AB][0-9A-F]|
+      [1-9ABCEF]%[89AB][0-9A-F]|
+      D%[89][0-9A-F]
+     )|
+     F(
+      0%[9AB][0-9A-F]|
+      [123]%[89AB][0-9A-F]|
+      4%8[0-9A-F]
+     )%[89AB][0-9A-F]
+    )%[89AB][0-9A-F]
+   ))*)$
+</pre><a href="#section-4-7" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -1358,15 +1414,15 @@ readability but should be ignored):<a href="#section-3-7" class="pilcrow">¶</a>
         <h3 id="name-conformance-requirements">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-conformance-requirements" class="section-name selfRef">Conformance Requirements</a>
         </h3>
-<p id="section-5.1-1">A string URI <span class="bcp14">MUST</span> conform to the "string-URI" syntax rule described in <a href="#syntax" class="auto internal xref">Section 3</a>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">A string URI <span class="bcp14">MUST</span> conform to the "string-URI" syntax rule defined in <a href="#syntax" class="auto internal xref">Section 4</a>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="handling-nonconforming-string-uris">
+<div id="recommendations-for-handling-nonconforming-string-uris">
 <section id="section-5.2">
-        <h3 id="name-handling-nonconforming-stri">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-handling-nonconforming-stri" class="section-name selfRef">Handling Nonconforming String URIs</a>
+        <h3 id="name-recommendations-for-handlin">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-recommendations-for-handlin" class="section-name selfRef">Recommendations for Handling Nonconforming String URIs</a>
         </h3>
-<p id="section-5.2-1">TODO Handling Nonconforming String URIs<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">TODO Recommendations for Handling Nonconforming String URIs<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1411,7 +1467,7 @@ readability but should be ignored):<a href="#section-3-7" class="pilcrow">¶</a>
 <dt id="section-8.1-1.5">Applications/protocols that use this scheme name:</dt>
           <dd style="margin-left: 1.5em" id="section-8.1-1.6">
             <p id="section-8.1-1.6.1">Any application or protocol may use this scheme for any purpose, provided that its use conforms to the rules defined
-in this document.<a href="#section-8.1-1.6.1" class="pilcrow">¶</a></p>
+by this specification.<a href="#section-8.1-1.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-8.1-1.7">Contact:</dt>
@@ -1426,7 +1482,7 @@ in this document.<a href="#section-8.1-1.6.1" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-8.1-1.11">References:</dt>
           <dd style="margin-left: 1.5em" id="section-8.1-1.12">
-            <p id="section-8.1-1.12.1">This document<a href="#section-8.1-1.12.1" class="pilcrow">¶</a></p>
+            <p id="section-8.1-1.12.1">This specification<a href="#section-8.1-1.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1435,27 +1491,63 @@ in this document.<a href="#section-8.1-1.6.1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-9">
-      <h2 id="name-normative-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2234">[RFC2234]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">RFC 2234</span>, <span class="seriesInfo">DOI 10.17487/RFC2234</span>, <time datetime="1997-11" class="refDate">November 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2234">https://www.rfc-editor.org/rfc/rfc2234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3986">[RFC3986]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="UNICODE">[UNICODE]</dt>
+      <dd>
+<span class="refTitle">"The Unicode Consortium. The Unicode Standard, Version 15.0.0, (Mountain View, CA: The Unicode Consortium, 2022. ISBN 978-1-936213-32-0)"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.unicode.org/versions/Unicode15.0.0/">https://www.unicode.org/versions/Unicode15.0.0/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 </dl>
+</section>
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2397">[RFC2397]</dt>
+        <dd>
+<span class="refAuthor">Masinter, L.</span>, <span class="refTitle">"The "data" URL scheme"</span>, <span class="seriesInfo">RFC 2397</span>, <span class="seriesInfo">DOI 10.17487/RFC2397</span>, <time datetime="1998-08" class="refDate">August 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2397">https://www.rfc-editor.org/rfc/rfc2397</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4151">[RFC4151]</dt>
+        <dd>
+<span class="refAuthor">Kindberg, T.</span> and <span class="refAuthor">S. Hawke</span>, <span class="refTitle">"The 'tag' URI Scheme"</span>, <span class="seriesInfo">RFC 4151</span>, <span class="seriesInfo">DOI 10.17487/RFC4151</span>, <time datetime="2005-10" class="refDate">October 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4151">https://www.rfc-editor.org/rfc/rfc4151</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4648">[RFC4648]</dt>
+        <dd>
+<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4648">https://www.rfc-editor.org/rfc/rfc4648</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8141">[RFC8141]</dt>
+        <dd>
+<span class="refAuthor">Saint-Andre, P.</span> and <span class="refAuthor">J. Klensin</span>, <span class="refTitle">"Uniform Resource Names (URNs)"</span>, <span class="seriesInfo">RFC 8141</span>, <span class="seriesInfo">DOI 10.17487/RFC8141</span>, <time datetime="2017-04" class="refDate">April 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8141">https://www.rfc-editor.org/rfc/rfc8141</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
 </section>
 <div id="acknowledgments">
 <section id="appendix-A">
