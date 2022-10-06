@@ -7,17 +7,11 @@ submissiontype: independent
 number:
 date:
 v: 3
-# area: AREA
-# workgroup: WG Working Group
 keyword:
   - string
   - uri
   - scheme
 venue:
-#  group: WG
-#  type: Working Group
-#  mail: WG@example.com
-#  arch: https://example.com/WG
   github: castholm/string-uri-scheme
   latest: 'https://castholm.github.io/string-uri-scheme/draft-castholm-string-uri-scheme.html'
 
@@ -26,120 +20,86 @@ author:
     email: carl@astholm.se
 
 normative:
+  UNICODE:
+    title: 'The Unicode Consortium. The Unicode Standard, Version 15.0.0, (Mountain View, CA: The Unicode Consortium, 2022. ISBN 978-1-936213-32-0)'
+    target: 'https://www.unicode.org/versions/Unicode15.0.0/'
 
 informative:
 
 --- abstract
 
-This document defines string URIs and the "string" URI scheme. A string URI identifies an application-dependent value
-(most commonly, but not necessarily, a string of characters) and can be used as a method of specifying such a value in
-a context where a URI is required. String URIs have a strict syntax and well-defined rules for processing and
-comparing that make it simple for applications to consume them.
+This document defines the "string" URI scheme, string URIs and rules for applications that use string URIs. A string
+URI includes a payload representing a string of characters that can be interpreted in an application-dependent manner
+to identify and possibly locate a resource. This enables applications to specify such a string in a context where a
+proper URI is required. String URIs have a strict syntax and well-defined rules for processing and comparing that make
+them simple for applications to use.
 
 --- middle
 
 # Introduction
 
-A string URI is a URI that identifies an application-dependent value, such as a string of characters. It uses the
-"string" URI scheme, which is designed to meet the following requirements:
+Sometimes, application developers find themselves in situations where a particular protocol mandates the use of URIs
+(Uniform Resource Identifiers {{!RFC3986}}). Most popular URI schemes are designed for identifiers to have very
+specific meanings and to be globally unique. This can be inconvenient when only a simple, locally unique identifier
+with an application-dependent meaning is desired.
 
+There exists a need for a simple URI (Uniform Resource Identifier) scheme that satisfies the following requirements:
+
+- Identifiers include a string of characters that can be interpreted in an application-dependent manner to identify
+  and possibly locate a resource.
 - Identifiers have a strict yet simple and familiar syntax that is easy for humans to remember.
-- Identifiers are convenient for developers and users of applications to use.
-- An identifier that identifies a string consisting solely of alphanumeric ASCII characters may safely include that
-  string as a component of the identifier itself without requiring any preprocessing.
-- An identifier has exactly one valid representation, making testing two identifiers for equality very simple.
+- Identifiers are convenient for application developers and users to use.
+- Identifiers have well-defined rules for comparing that are trivial for application developers to implement.
+
+Existing URI schemes satisfy some, but not all, of the above requirements.
+
+- HTTP (Hypertext Transfer Protocol) URIs ({{Section 4.2 of ?RFC9110}}) are familiar to most users and can include
+  arbitrary application-dependent data. However, minting new HTTP URIs require a registered domain name that may
+  change owners in the future, making them inconvenient to use as stable identifiers, and the rules for comparing
+  identifiers are poorly specified.
+- URNs (Uniform Resource Names {{?RFC8141}}) require using pre-existing namespaces, which come with their own rules
+  and restrictions, or registering new namespaces, which is often inconvenient. While URNs have well-defined rules for
+  comparing, such rules are non-trivial to implement in practice.
+- Data URIs {{?RFC2397}} are simple to use, but no normative rules for comparing data URIs have been specified and
+  they technically only identify and locate their own included payload.
+- Tag URIs {{?RFC4151}} have simple, well-defined rules for comparing, but because they are designed to be unique
+  across time and space their structure may feel nedlessly complex for applications that only require local
+  uniqueness.
+
+This specification introduces the "string" URI scheme, which is designed to satisfy all of the above requirements.
+
+The following is an example of an identifier using the "string" URI scheme:
+
+~~~
+   string:UserNotFoundError
+~~~
+
+Such an identifier might, for example, identify an application-specific error type representing an error indicating
+that a user was not able to be found. The same identifier might also be used to locate more information about the
+error type, using a method defined and specified by the application.
 
 # Terminology
 
 {::boilerplate bcp14-tagged}
 
-# Syntax {#syntax}
+For simplicity, this specification uses the term "character(s)" to mean "Unicode scalar value(s)" as defined by
+definition D76 in Section 3.9 of {{!UNICODE}}. When this specification requires attention to be carefully directed
+toward the specific implications of "Unicode scalar value(s)", that specific term is used in order to reduce
+ambiguity.
 
-The string URI syntax is a subset of the generic URI syntax defined in {{!RFC3986}}.
+# Structure and Usage
 
-A non-normative description of the string URI syntax can be constructed as follows:
+## Components of a String URI
 
-- The URI must begin with a case-sensitive match for "string" in all lowercase immediately followed by a colon (":").
-- Everything following the colon must consist solely of any combination of the digits 0 to 9, the letters A to Z in
-  both uppercase and lowercase, the hyphen-minus ("-"), the low line ("_") or percent-encoded octets (see
-  {{Section 2.1 of ?RFC3986}}).
-- Percent-encoded octets must use uppercase hexadecimal digits.
-- Percent-encoded octets must decode to valid UTF-8.
-- Percent-encoded octets must not decode to 0-9, A-Z (case-insensitive), "-" or "_".
-
-Using ABNF and the "DIGIT" and "ALPHA" rules defined in {{!RFC2234}}, a formal definition of the string URI syntax is
-described by the "string-URI" rule below:
-
-~~~ abnf
-string-URI = %x73.74.72.69.6E.67 ":" data
-data       = *( DIGIT / ALPHA / "-" / "_" / pct )
-
-pct        = "%" ( pct-1 / pct-2 / pct-3 / pct-4 )
-
-pct-1      = %x30-31 hex
-           / "2" ( DIGIT / %x41-43 / %x45-46 )
-           / "3" %x41-46
-           / ( "4" / "6" ) "0"
-           / "5" %x42-45
-           / "7" %x42-46
-
-pct-2      = pct-2-1 pct-cont
-pct-2-1    = %x43 ( %x32-39 / %x41-46 )
-           / %x44 hex
-
-pct-3      = pct-3-1-2 pct-cont
-pct-3-1-2  = %x45 ( "0%" %x41-42 hex
-                  / ( %x31-39 / %x41-43 / %x45-46 ) pct-cont
-                  / %x44 "%" %x38-39 hex
-                  )
-
-pct-4      = pct-4-1-2 pct-cont pct-cont
-pct-4-1-2  = %x46 ( "0%" ( "9" / %x41-42 ) hex
-                  / %x31-33 pct-cont
-                  / "4%8" hex
-                  )
-
-pct-cont   = "%" ( %x38-39 / %x41-42 ) hex
-
-hex        = %x30-39 / %x41-46
-~~~
-
-Although the syntax may appear daunting, most complexity stems from the "pct" rule for percent-encoded octets being
-defined such that they can not decode to invalid UTF-8 and that they are not used to encode characters such as digits
-or letters that can be used unencoded.
-
-The string URI syntax can also be described by the following POSIX regular expression (whitespace included for
-readability but should be ignored):
-
-~~~
-^string\:(([0-9A-Za-z\-_]|%(
- [01][0-9A-F]
- |2[0-9ABCEF]
- |3[A-F]
- |[46]0
- |5[B-E]
- |7[B-F]
- |(
-  (C[2-9A-F]|D[0-9A-F])
-  |E(
-   0%[AB][0-9A-F]
-   |[1-9ABCEF]%[89AB][0-9A-F]
-   |D%[89][0-9A-F]
-  )
-  |F(
-   0%[9AB][0-9A-F]
-   |[123]%[89AB][0-9A-F]
-   |4%8[0-9A-F]
-  )%[89AB][0-9A-F]
- )%[89AB][0-9A-F]
-))*)$
-~~~
-
-# Usage
+TODO Components of a String URI
 
 ## Using String URIs
 
-TODO Defining and Using String URIs
+TODO Using String URIs
+
+## Obtaining the String URI Payload
+
+TODO Obtaining the String URI Payload
 
 ## Comparing String URIs
 
@@ -149,15 +109,91 @@ TODO Comparing String URIs
 
 TODO Locating Resources Identified by String URIs
 
+# Syntax {#syntax}
+
+The string URI syntax is a subset of the generic URI syntax defined in {{!RFC3986}}.
+
+Using ABNF and including the "DIGIT" and "ALPHA" rules defined in {{!RFC2234}}, the string URI syntax is defined by
+the "string-URI" rule in the following ABNF specification:
+
+~~~ abnf
+   string-URI  = %x73.74.72.69.6E.67 ":" payload
+   payload     = *( unencoded / pct-encoded )
+   unencoded   = DIGIT / ALPHA / "-" / "_"
+   pct-encoded = "%" ( pct-1 / pct-2 / pct-3 / pct-4 )
+
+   pct-1       = %x30-31 upper-hex
+               / "2" ( DIGIT / %x41-43 / %x45-46 )
+               / "3" %x41-46
+               / ( "4" / "6" ) "0"
+               / "5" %x42-45
+               / "7" %x42-46
+
+   pct-2       = pct-2-1 pct-cont
+   pct-2-1     = %x43 ( %x32-39 / %x41-46 )
+               / %x44 upper-hex
+
+   pct-3       = pct-3-1-2 pct-cont
+   pct-3-1-2   = %x45 ( "0%" %x41-42 upper-hex
+                      / ( %x31-39 / %x41-43 / %x45-46 ) pct-cont
+                      / %x44 "%" %x38-39 upper-hex
+                      )
+
+   pct-4       = pct-4-1-2 pct-cont pct-cont
+   pct-4-1-2   = %x46 ( "0%" ( "9" / %x41-42 ) upper-hex
+                      / %x31-33 pct-cont
+                      / "4%8" upper-hex
+                      )
+
+   pct-cont    = "%" ( %x38-39 / %x41-42 ) upper-hex
+
+   upper-hex   = %x30-39 / %x41-46
+~~~
+
+Readers should note that the "pct-encoded" rule is NOT equivalent to the rule of the same name found in
+{{Section 2.1 of ?RFC3986}} and instead describes a much more constrained syntax that ensures that percent-encoded
+octets use only uppercase hexadecimal digits and do not decode to invalid UTF-8 or characters matched by the
+"unencoded" rule.
+
+Observant readers will also note that the "unencoded" rule describes the base64url alphabet found in
+{{Section 2.1 of ?RFC4648}}, which may already be familiar.
+
+The string URI syntax is also described by the following POSIX regular expression (where whitespace is included for
+readability but should be ignored):
+
+~~~
+   ^string:(([0-9A-Za-z\-_]|%(
+    [01][0-9A-F]|
+    2[0-9ABCEF]|
+    3[A-F]|
+    [46]0|
+    5[B-E]|
+    7[B-F]|
+    (
+     (C[2-9A-F]|D[0-9A-F])|
+     E(
+      0%[AB][0-9A-F]|
+      [1-9ABCEF]%[89AB][0-9A-F]|
+      D%[89][0-9A-F]
+     )|
+     F(
+      0%[9AB][0-9A-F]|
+      [123]%[89AB][0-9A-F]|
+      4%8[0-9A-F]
+     )%[89AB][0-9A-F]
+    )%[89AB][0-9A-F]
+   ))*)$
+~~~
+
 # Conformance
 
 ## Conformance Requirements
 
-A string URI MUST conform to the "string-URI" syntax rule described in {{syntax}}.
+A string URI MUST conform to the "string-URI" syntax rule defined in {{syntax}}.
 
-## Handling Nonconforming String URIs
+## Recommendations for Handling Nonconforming String URIs
 
-TODO Handling Nonconforming String URIs
+TODO Recommendations for Handling Nonconforming String URIs
 
 # Examples
 
@@ -180,7 +216,7 @@ Status:
 
 Applications/protocols that use this scheme name:
 : Any application or protocol may use this scheme for any purpose, provided that its use conforms to the rules defined
-  in this document.
+  by this specification.
 
 Contact:
 : N/A
@@ -189,7 +225,7 @@ Change controller:
 : N/A
 
 References:
-: This document
+: This specification
 
 --- back
 
