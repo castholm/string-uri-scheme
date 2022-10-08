@@ -3,9 +3,9 @@
 
 
 Network Working Group                                         C. Åstholm
-Internet-Draft                                            6 October 2022
+Internet-Draft                                            8 October 2022
 Intended status: Experimental                                           
-Expires: 9 April 2023
+Expires: 11 April 2023
 
 
                         The "string" URI Scheme
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 April 2023.
+   This Internet-Draft will expire on 11 April 2023.
 
 Copyright Notice
 
@@ -84,7 +84,6 @@ Table of Contents
    9.  References
      9.1.  Normative References
      9.2.  Informative References
-   Acknowledgments
    Author's Address
 
 1.  Introduction
@@ -96,8 +95,8 @@ Table of Contents
    This can be inconvenient when only a simple, locally unique
    identifier with an application-dependent meaning is desired.
 
-   There exists a need for a simple URI (Uniform Resource Identifier)
-   scheme that satisfies the following requirements:
+   There exists a need for a simple URI scheme that satisfies the
+   following requirements:
 
    *  Identifiers include a string of characters that can be interpreted
       in an application-dependent manner to identify and possibly locate
@@ -117,7 +116,7 @@ Table of Contents
 
    *  HTTP (Hypertext Transfer Protocol) URIs [RFC9110] (Section 4.2)
       are familiar to most users and can include arbitrary application-
-      dependent data.  However, minting new HTTP URIs require a
+      dependent data.  However, minting new HTTP URIs requires a
       registered domain name that may change owners in the future,
       making them inconvenient to use as stable identifiers, and the
       rules for comparing identifiers are poorly specified.
@@ -125,7 +124,7 @@ Table of Contents
    *  URNs (Uniform Resource Names [RFC8141]) require using pre-existing
       namespaces, which come with their own rules and restrictions, or
       registering new namespaces, which is often inconvenient.  While
-      URNs have well-defined rules for comparing, such rules are non-
+      URNs have well-defined rules for comparing, the rules are non-
       trivial to implement in practice.
 
    *  Data URIs [RFC2397] are simple to use, but no normative rules for
@@ -135,7 +134,7 @@ Table of Contents
    *  Tag URIs [RFC4151] have simple, well-defined rules for comparing,
       but because they are designed to be unique across time and space
       their structure may feel nedlessly complex for applications that
-      only require local uniqueness.
+      only desire local uniqueness.
 
    This specification introduces the "string" URI scheme, which is
    designed to satisfy all of the above requirements.
@@ -161,10 +160,7 @@ Table of Contents
 
    For simplicity, this specification uses the term "character(s)" to
    mean "Unicode scalar value(s)" as defined by definition D76 in
-   Section 3.9 of [UNICODE].  When this specification requires attention
-   to be carefully directed toward the specific implications of "Unicode
-   scalar value(s)", that specific term is used in order to reduce
-   ambiguity.
+   Section 3.9 of [UNICODE].
 
 3.  Structure and Usage
 
@@ -297,7 +293,7 @@ Table of Contents
 
    Applications/protocols that use this scheme name:
       Any application or protocol may use this scheme for any purpose,
-      provided that its use conforms to the rules defined by this
+      provided that the use conforms to the rules defined by this
       specification.
 
    Contact:
@@ -331,9 +327,8 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-   [UNICODE]  "The Unicode Consortium. The Unicode Standard, Version
-              15.0.0, (Mountain View, CA: The Unicode Consortium, 2022.
-              ISBN 978-1-936213-32-0)", n.d.,
+   [UNICODE]  The Unicode Consortium, "The Unicode Standard, Version
+              15.0.0", ISBN 978-1-936213-32-0, 13 September 2022,
               <https://www.unicode.org/versions/Unicode15.0.0/>.
 
 9.2.  Informative References
@@ -358,10 +353,6 @@ Table of Contents
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9110>.
-
-Acknowledgments
-
-   TODO Acknowledgments
 
 Author's Address
 
