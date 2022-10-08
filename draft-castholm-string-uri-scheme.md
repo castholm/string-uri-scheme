@@ -22,7 +22,12 @@ author:
 normative:
   UNICODE:
     -: UNICODE
-    title: 'The Unicode Consortium. The Unicode Standard, Version 15.0.0, (Mountain View, CA: The Unicode Consortium, 2022. ISBN 978-1-936213-32-0)'
+    author:
+      - org: The Unicode Consortium
+    title: The Unicode Standard, Version 15.0.0
+    seriesinfo:
+      ISBN: 978-1-936213-32-0
+    date: 2022-09-13
     target: 'https://www.unicode.org/versions/Unicode15.0.0/'
 
 informative:
@@ -44,7 +49,7 @@ Sometimes, application developers find themselves in situations where a particul
 specific meanings and to be globally unique. This can be inconvenient when only a simple, locally unique identifier
 with an application-dependent meaning is desired.
 
-There exists a need for a simple URI (Uniform Resource Identifier) scheme that satisfies the following requirements:
+There exists a need for a simple URI scheme that satisfies the following requirements:
 
 - Identifiers include a string of characters that can be interpreted in an application-dependent manner to identify
   and possibly locate a resource.
@@ -55,16 +60,16 @@ There exists a need for a simple URI (Uniform Resource Identifier) scheme that s
 Existing URI schemes satisfy some, but not all, of the above requirements.
 
 - HTTP (Hypertext Transfer Protocol) URIs {{?RFC9110 (Section 4.2)}} are familiar to most users and can include
-  arbitrary application-dependent data. However, minting new HTTP URIs require a registered domain name that may
+  arbitrary application-dependent data. However, minting new HTTP URIs requires a registered domain name that may
   change owners in the future, making them inconvenient to use as stable identifiers, and the rules for comparing
   identifiers are poorly specified.
 - URNs (Uniform Resource Names {{?RFC8141}}) require using pre-existing namespaces, which come with their own rules
   and restrictions, or registering new namespaces, which is often inconvenient. While URNs have well-defined rules for
-  comparing, such rules are non-trivial to implement in practice.
+  comparing, the rules are non-trivial to implement in practice.
 - Data URIs {{?RFC2397}} are simple to use, but no normative rules for comparing data URIs have been specified and
   they technically only identify and locate their own included payload.
 - Tag URIs {{?RFC4151}} have simple, well-defined rules for comparing, but because they are designed to be unique
-  across time and space their structure may feel nedlessly complex for applications that only require local
+  across time and space their structure may feel nedlessly complex for applications that only desire local
   uniqueness.
 
 This specification introduces the "string" URI scheme, which is designed to satisfy all of the above requirements.
@@ -84,9 +89,7 @@ error type, using a method defined and specified by the application.
 {::boilerplate bcp14-tagged}
 
 For simplicity, this specification uses the term "character(s)" to mean "Unicode scalar value(s)" as defined by
-definition D76 in Section 3.9 of {{-UNICODE}}. When this specification requires attention to be carefully directed
-toward the specific implications of "Unicode scalar value(s)", that specific term is used in order to reduce
-ambiguity.
+definition D76 in Section 3.9 of {{-UNICODE}}.
 
 # Structure and Usage
 
@@ -216,7 +219,7 @@ Status:
 : Provisional
 
 Applications/protocols that use this scheme name:
-: Any application or protocol may use this scheme for any purpose, provided that its use conforms to the rules defined
+: Any application or protocol may use this scheme for any purpose, provided that the use conforms to the rules defined
   by this specification.
 
 Contact:
@@ -229,8 +232,3 @@ References:
 : This specification
 
 --- back
-
-# Acknowledgments
-{:numbered="false"}
-
-TODO Acknowledgments
